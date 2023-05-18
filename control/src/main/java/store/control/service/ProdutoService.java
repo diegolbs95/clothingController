@@ -30,6 +30,10 @@ public class ProdutoService {
     @Autowired
     private EstoqueProdutoService estoqueProdutoService;
 
+    public Produto buscarProdutoPorNome(String nome) throws ProdutoException {
+        return repository.findByProdutoNome(nome).orElseThrow(ProdutoException::new);
+    }
+
     public String adicionarProduto(ProdutoRc produtoDto) {
         try {
             var produto = ProdutoFactory.criarProduto(produtoDto);

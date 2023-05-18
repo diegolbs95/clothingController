@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import store.control.exception.ProdutoException;
 import store.control.records.ColoracaoRc;
 import store.control.records.ProdutoRc;
+import store.control.records.ProdutoResponse;
 import store.control.records.VenderProdutoRc;
 import store.control.entity.Produto;
 import store.control.repository.ProdutoRepository;
@@ -30,6 +31,16 @@ public class ProdutoController {
 
         log.info("[PRODUTO-CONTROLLER]-Request adicionar produto!");
         return ResponseEntity.status(HttpStatus.CREATED).body(service.adicionarProduto(produtoDto));
+    }
+
+    @GetMapping
+    public ResponseEntity<Produto> buscarProdutoPorNome(@RequestParam String nomeProduto) {
+        try {
+            return ResponseEntity.ok(service.buscarProdutoPorNome(nomeProduto));
+        } catch (ProdutoException e) {
+            log.error(e.getMessage());
+            return null;
+        }
     }
 
     @GetMapping("/listar-produtos")
